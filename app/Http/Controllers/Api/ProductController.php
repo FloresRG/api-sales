@@ -6,13 +6,12 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Http\Resources\ProductResource;
+
 class ProductController extends Controller
 {
-    //
     public function index()
     {
-        $products = Product::select('id', 'name', 'price', 'stock', 'image')->get();
-
-        return response()->json($products, 200);
+        return ProductResource::collection(Product::all());
     }
 }
