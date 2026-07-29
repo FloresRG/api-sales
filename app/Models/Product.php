@@ -12,4 +12,12 @@ class Product extends Model
         'stock',
         'image'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function saleDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
 }
