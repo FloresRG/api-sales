@@ -59,12 +59,16 @@ class SaleService
         });
     }
 
-    /**
-     * @param Sale $sale
-     * @return void
-     */
     public function deleteSale(Sale $sale): void
     {
-        $sale->delete();
+        DB::transaction(function () use ($sale) {
+            // Restauramos el stock de cada producto vendido
+            foreach ($sale->details as $detail) {
+                $detail->product->increment('stock', $detail->quantity);
+            }
+
+            // Eliminamos la venta
+            $sale->delete();
+        });
     }
 }

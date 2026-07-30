@@ -21,7 +21,7 @@ class SaleController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $sales = Sale::with('details.product')->get();
+        $sales = Sale::with('details.product')->paginate(15);
         return SaleResource::collection($sales);
     }
 
